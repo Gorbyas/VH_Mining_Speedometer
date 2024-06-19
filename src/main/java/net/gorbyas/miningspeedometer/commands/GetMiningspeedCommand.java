@@ -7,6 +7,8 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.*;
@@ -36,9 +38,11 @@ public class GetMiningspeedCommand {
 
     private int nEffi (ItemStack itemStack){
         if(itemStack.isEnchanted()){
-            if(itemStack.getEnchantmentTags().contains("Efficiency")){
-                for (Tag tag : itemStack.getEnchantmentTags()){
-                    if (tag.getType() == )
+            CompoundTag enchants = itemStack.getTag();
+            if(enchants != null && enchants.contains("Enchantments") && enchants.getList("Enchantments", 10).stream()
+                    .anyMatch(tag -> tag.getAsString().equals("minecraft:efficiency"))){
+                for (Tag tag : enchants.getList("Enchantments",10)){
+                    if (tag.get)
                 }
             }
         }
