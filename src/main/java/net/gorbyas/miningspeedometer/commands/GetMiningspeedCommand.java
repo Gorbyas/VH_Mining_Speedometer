@@ -7,11 +7,13 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.*;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class GetMiningspeedCommand {
@@ -21,10 +23,25 @@ public class GetMiningspeedCommand {
         })));
     }
 
+    private boolean isTool(ItemStack itemStack){
+        assert itemStack.getTag() != null;
+        return itemStack.getTag().contains("DiggingTool");
+    }
+
     private boolean isVaultTool(ItemStack itemStack){
         if(itemStack.getTag() == null || itemStack.isEmpty()){
             return false;
         } else return itemStack.getTag().contains("vault_tool");
+    }
+
+    private int nEffi (ItemStack itemStack){
+        if(itemStack.isEnchanted()){
+            if(itemStack.getEnchantmentTags().contains("Efficiency")){
+                for (Tag tag : itemStack.getEnchantmentTags()){
+                    if (tag.getType() == )
+                }
+            }
+        }
     }
 
     private int getMiningspeed(CommandSourceStack source, ItemArgument itemArgument) throws CommandSyntaxException{
