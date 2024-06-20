@@ -27,14 +27,16 @@ displayName="Vault Hunters Mining Speedometer" #mandatory
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="examplemod.png" #optional
+logoFile="logo.png" #optional
 # A text field displayed in the mod UI
-credits="Thanks for this example mod goes to Java" #optional
+credits="" #optional
 # A text field displayed in the mod UI
 authors="Gorbyas" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-This mod adds a "/speedometer for :block:" command, which takes into consideration effects on the player and a tool held in hand to determine additional mining speed needed to instamine this block.
+This mod adds a "/speedometer :block:" command, which takes into consideration effects on the player and the tool held in hand to determine how much mining speed is needed to instamine the block.
+
+Special thanks to JustAHuman for helping me with this little project.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.miningspeedometer]] #optional
