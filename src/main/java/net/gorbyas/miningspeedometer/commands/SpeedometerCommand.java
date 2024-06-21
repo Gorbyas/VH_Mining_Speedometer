@@ -18,9 +18,12 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.ClientCommandHandler; //this has to be a part of the solution I suppose, idk how to implement it tho
+import net.minecraftforge.client.ClientCommandSourceStack;
 
 import java.util.Locale;
 import java.util.Objects;
+
 
 public class SpeedometerCommand {
     public SpeedometerCommand(CommandDispatcher<CommandSourceStack> dispatcher){
