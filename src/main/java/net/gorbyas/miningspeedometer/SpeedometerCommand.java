@@ -54,11 +54,11 @@ public class SpeedometerCommand {
             source.sendFailure(new TextComponent("This block cannot be instamined"));
             return 0;
         } else if (speed == 0) {
-            source.sendSuccess(new TextComponent("You can already instamine this block\nall you need is " + bestTool), true);
+            source.sendSuccess(new TextComponent("You don’t need any more mining speed to instamine this one!\nall you need is " + bestTool), false);
             return 1;
         }
         else {
-            source.sendSuccess(new TextComponent("You need " + speed + " total additional Mining speed to instamine this one!\n" + bestTool + " will be the most effective"), true);
+            source.sendSuccess(new TextComponent("You need " + speed + " total additional Mining speed to instamine this one!\n" + bestTool + " will be the most effective"), false);
             return 1;
         }
     }
@@ -95,7 +95,7 @@ public class SpeedometerCommand {
         if (MobEffectUtil.hasDigSpeed(player)) {
             speedToInstamine *= 1/(1.0F + (float)(MobEffectUtil.getDigSpeedAmplification(player) + 1) * 0.2F);
             if(MobEffectUtil.getDigSpeedAmplification(player) < 2){
-                source.sendSuccess(new TextComponent("You can lower the required mining speed with higher Haste level"),true);
+                source.sendSuccess(new TextComponent("You can lower the required mining speed with higher Haste level"),false);
             }
         }
         if (f > 1.0F) {
@@ -104,12 +104,12 @@ public class SpeedometerCommand {
             if (i > 0 && !itemstack.isEmpty()) {
                 speedToInstamine -= (float)(i * i + 1);
             } else if (i == 0 || itemstack.isEmpty()){
-                source.sendSuccess(new TextComponent("You can lower the required mining speed by getting the efficiency enchantment"),true);
+                source.sendSuccess(new TextComponent("You can lower the required mining speed by getting the efficiency enchantment"),false);
             }
         }
         if (player.hasEffect(MobEffects.DIG_SLOWDOWN)) {
             float f1;
-            source.sendSuccess(new TextComponent("You can lower the required mining speed by getting rid of negative effects"),true);
+            source.sendSuccess(new TextComponent("You can lower the required mining speed by getting rid of negative effects"),false);
             f1 = switch (Objects.requireNonNull(player.getEffect(MobEffects.DIG_SLOWDOWN)).getAmplifier()) {
                 case 0 -> 0.3F;
                 case 1 -> 0.09F;
@@ -122,12 +122,12 @@ public class SpeedometerCommand {
 
         if (player.isEyeInFluid(FluidTags.WATER) && !EnchantmentHelper.hasAquaAffinity(player)) {
             speedToInstamine *= 5.0F;
-            source.sendSuccess(new TextComponent("You can lower the required mining speed by getting Aqua Affinity"),true);
+            source.sendSuccess(new TextComponent("You can lower the required mining speed by getting Aqua Affinity"),false);
         }
 
         if (!player.isOnGround()) {
             speedToInstamine *= 5.0F;
-            source.sendSuccess(new TextComponent("You can lower the required mining speed by standing on ground"),true);
+            source.sendSuccess(new TextComponent("You can lower the required mining speed by standing on ground"),false);
         }
 
         if (speedToInstamine < 0 && !(pState.getBlock() instanceof VaultChestBlock)) {return -1;}
