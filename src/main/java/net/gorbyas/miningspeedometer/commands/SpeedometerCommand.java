@@ -1,4 +1,4 @@
-package net.gorbyas.miningspeedometer;
+package net.gorbyas.miningspeedometer.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
