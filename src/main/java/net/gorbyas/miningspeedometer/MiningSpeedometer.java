@@ -6,8 +6,10 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.logging.LogUtils;
 import iskallia.vault.block.VaultChestBlock;
 import iskallia.vault.item.tool.ToolItem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.blocks.BlockStateArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.network.chat.TextComponent;
@@ -38,15 +40,6 @@ public class MiningSpeedometer {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public MiningSpeedometer() {
-
-        if (FMLEnvironment.dist == Dist.CLIENT) {
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        }
-    }
-
-    private void setup(final FMLCommonSetupEvent event) {
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
 
     @Mod.EventBusSubscriber(modid = MiningSpeedometer.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -63,31 +56,34 @@ public class MiningSpeedometer {
 
     public static class SpeedometerCommand {
         public static void reg(CommandDispatcher<CommandSourceStack> dispatcher) {
-            dispatcher.register(Commands.literal("speedometer").then(Commands.argument("item", ItemArgument.item()).executes((command) -> {
-                return speedometer(command.copyFor(command.getSource()), ItemArgument.getItem(command, "item"));
-            })));
+            dispatcher.register(
+                Commands.literal("speedometer")
+                    .then(Commands.argument("block", BlockStateArgument.block())
+                    .executes(SpeedometerCommand::exec))
+            );
         }
 
-        private static int speedometer(CommandContext<CommandSourceStack> context, ItemInput item) throws CommandSyntaxException {
+        private static int exec(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
             CommandSourceStack source = context.getSource();
-            Player player = source.getPlayerOrException();
-            ItemStack playerMainHandItem = player.getMainHandItem();
+            Block block = BlockStateArgument.getBlock(context, "block").getState().getBlock();
+            ItemStack plStack = Minecraft.getInstance().player.getMainHandItem();
 
-            if (!(playerMainHandItem.getItem() instanceof ToolItem)) {
+            if(plStack.isEmpty() || !(plStack.getItem() instanceof ToolItem)) {
                 source.sendFailure(new TextComponent("You need to hold a Vault Tool in your main hand"));
                 return 0;
             }
 
+            // Not needed anymore because the argument will always be a block
             //Check if the item is actually a block
-            if (!(item.getItem() instanceof BlockItem)) {
-                source.sendFailure(new TextComponent("Selected item must be a block"));
-                return 0;
-            }
+            //if (!(item.getItem() instanceof BlockItem)) {
+            //    source.sendFailure(new TextComponent("Selected item must be a block"));
+            //    return 0;
+            //}
 
-            Block block = ((BlockItem) item.getItem()).getBlock();
+            //Block block = ((BlockItem) item.getItem()).getBlock();
 
             String bestTool = getBestTool(block);
-            float speed = getMiningSpeed(block.defaultBlockState(), player, source);
+            float speed = getMiningSpeed(block.defaultBlockState(), Minecraft.getInstance().player, source);
 
             if (speed < 0) {
                 source.sendFailure(new TextComponent("This block cannot be instamined"));
