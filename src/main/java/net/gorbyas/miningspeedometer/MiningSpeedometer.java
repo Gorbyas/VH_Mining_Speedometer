@@ -6,8 +6,10 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.logging.LogUtils;
 import iskallia.vault.block.VaultChestBlock;
 import iskallia.vault.item.tool.ToolItem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.blocks.BlockStateArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.network.chat.TextComponent;
@@ -61,7 +63,7 @@ public class MiningSpeedometer {
             );
         }
 
-        private static int speedometer(CommandContext<CommandSourceStack> context, ItemInput item) throws CommandSyntaxException {
+        private static int exec(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
             CommandSourceStack source = context.getSource();
             Block block = BlockStateArgument.getBlock(context, "block").getState().getBlock();
             ItemStack plStack = Minecraft.getInstance().player.getMainHandItem();
