@@ -12,10 +12,10 @@ public class ClientConfig {
     static {
         BUILDER.push("Config for VH Mining Speedometer");
 
-        COMMAND_OUTPUT_FORMAT = BUILDER.comment("The Output Format for the /speedometer command [TOTAL_MINING_SPEED_WITHBASE, TOTAL_MINING_SPEED_WITHOUTBASE, ADDITIONAL_MINING_SPEED]")
+        COMMAND_OUTPUT_FORMAT = BUILDER.comment("The Output Format for the /speedometer command")
                 .defineEnum("Command Output Format", OutputFormat.TOTAL_MINING_SPEED_WITHOUTBASE);
 
-        TOOLTIP_OUTPUT_FORMAT = BUILDER.comment("The Output Format for the speedometer jade tooltip [TOTAL_MINING_SPEED_WITHBASE, TOTAL_MINING_SPEED_WITHOUTBASE, ADDITIONAL_MINING_SPEED]")
+        TOOLTIP_OUTPUT_FORMAT = BUILDER.comment("The Output Format for the speedometer jade tooltip")
                 .defineEnum("Jade Output Format", OutputFormat.TOTAL_MINING_SPEED_WITHOUTBASE);
 
         BUILDER.pop();

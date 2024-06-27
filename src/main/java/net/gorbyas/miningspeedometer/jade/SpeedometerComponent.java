@@ -45,8 +45,13 @@ public class SpeedometerComponent implements IComponentProvider {
 
         float formattedSpeed = MiningSpeedometer.format(format, neededSpeed, stack.getDestroySpeed(state));
         boolean canInstamine = neededSpeed == 0 || stack.getDestroySpeed(state) >= neededSpeed;
-        iTooltip.add(new TranslatableComponent("speedometer.jade.tooltip.speed_"
-                + (format == ClientConfig.OutputFormat.ADDITIONAL_MINING_SPEED ? "additional" : "needed"),
+        boolean additional = format == ClientConfig.OutputFormat.ADDITIONAL_MINING_SPEED;
+        if (canInstamine && additional) {
+            iTooltip.add(new TranslatableComponent("speedometer.jade.tooltip.instamine").withStyle(ChatFormatting.GREEN));
+            return;
+        }
+
+        iTooltip.add(new TranslatableComponent("speedometer.jade.tooltip.speed_" + (additional ? "additional" : "needed"),
                 formattedSpeed, (canInstamine ? "✔" : "✘")).withStyle(canInstamine ? ChatFormatting.GREEN : ChatFormatting.RED));
     }
 }
