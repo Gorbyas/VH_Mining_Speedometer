@@ -1,0 +1,6 @@
+{
+  "config.waila.plugin_miningspeedometer.speedometer": "Enable Speedometer Tooltip",
+  "speedometer.jade.tooltip.instamine": "Instaminable ✔",
+  "speedometer.jade.tooltip.speed_needed": "+%s Mining Speed to Instamine %s",
+  "speedometer.jade.tooltip.speed_additional": "+%s more Mining Speed to Instamine %s"
+}
